@@ -40,7 +40,17 @@ extern "C" {
     #define BOARD_RHPORT BOARD_TUD_RHPORT
   #else
     #define BOARD_RHPORT 0
+    #define BOARD_TUD_RHPORT 0
   #endif
+#endif
+
+#if defined(BOARD_TUH_RHPORT)
+  #if BOARD_TUH_RHPORT != BOARD_RHPORT
+    #undef BOARD_TUH_RHPORT
+    #define BOARD_TUH_RHPORT BOARD_RHPORT
+  #endif
+#else
+  #define BOARD_TUH_RHPORT BOARD_RHPORT
 #endif
 
 // RHPort max operational speed can defined by board.mk
