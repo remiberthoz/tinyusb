@@ -425,6 +425,11 @@ TU_ATTR_WEAK bool dcd_edpt_xfer_fifo(uint8_t rhport, uint8_t ep_addr, tu_fifo_t 
   return false;
 }
 
+TU_ATTR_WEAK bool dcd_configure(uint8_t rhport, uint32_t cfg_id, const void* cfg_param) {
+  (void) rhport; (void) cfg_id; (void) cfg_param;
+  return false;
+}
+
 //--------------------------------------------------------------------+
 // Debug
 //--------------------------------------------------------------------+
@@ -494,11 +499,12 @@ void tud_sof_cb_enable(bool en) {
   usbd_sof_enable(_usbd_rhport, SOF_CONSUMER_USER, en);
 }
 
-//--------------------------------------------------------------------+
-// USBD Task
-//--------------------------------------------------------------------+
 bool tud_inited(void) {
   return _usbd_rhport != RHPORT_INVALID;
+}
+
+bool tud_configure(uint8_t rhport, uint32_t cfg_id, const void* cfg_param) {
+  return dcd_configure(rhport, cfg_id, cfg_param);
 }
 
 bool tud_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init) {
@@ -577,6 +583,8 @@ bool tud_deinit(uint8_t rhport) {
 
   TU_LOG_USBD("USBD deinit on controller %u\r\n", rhport);
 
+  const uint8_t cfg_num = _usbd_dev.cfg_num;
+
   // Deinit device controller driver
   dcd_int_disable(rhport);
   dcd_disconnect(rhport);
@@ -594,6 +602,10 @@ bool tud_deinit(uint8_t rhport) {
     }
   }
 
+  // Clear device data
+  tu_varclr(&_usbd_dev);
+  usbd_control_reset();
+
   // Deinit device queue & task
   osal_queue_delete(_usbd_q);
   _usbd_q = NULL;
@@ -605,6 +617,11 @@ bool tud_deinit(uint8_t rhport) {
 #endif
 
   _usbd_rhport = RHPORT_INVALID;
+
+  if (cfg_num > 0) {
+    tud_umount_cb();
+  }
+
   return true;
 }
 
@@ -630,6 +647,9 @@ bool tud_task_event_ready(void) {
   return !osal_queue_empty(_usbd_q);
 }
 
+//--------------------------------------------------------------------+
+// USBD Task
+//--------------------------------------------------------------------+
 /* USB Device Driver task
  * This top level thread manages all device controller event and delegates events to class-specific drivers.
  * This should be called periodically within the mainloop or rtos thread.

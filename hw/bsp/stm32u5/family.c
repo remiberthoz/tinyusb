@@ -60,15 +60,12 @@ void USB_IRQHandler(void) {
 void OTG_FS_IRQHandler(void) {
   tusb_int_handler(0, true);
 }
-
 #endif
 #ifdef USB_OTG_HS
 void OTG_HS_IRQHandler(void) {
   tusb_int_handler(0, true);
 }
-
 #endif
-
 //--------------------------------------------------------------------+
 // MACRO TYPEDEF CONSTANT ENUM
 //--------------------------------------------------------------------+
