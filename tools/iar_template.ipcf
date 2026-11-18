@@ -22,6 +22,13 @@
             <path>$TUSB_DIR$/src/class/bth/bth_device.c</path>
             <path>$TUSB_DIR$/src/class/bth/bth_device.h</path>
         </group>
+        <group name="src/class/ccid">
+            <path>$TUSB_DIR$/src/class/ccid/ccid_device.c</path>
+            <path>$TUSB_DIR$/src/class/ccid/ccid_host.c</path>
+            <path>$TUSB_DIR$/src/class/ccid/ccid.h</path>
+            <path>$TUSB_DIR$/src/class/ccid/ccid_device.h</path>
+            <path>$TUSB_DIR$/src/class/ccid/ccid_host.h</path>
+        </group>
         <group name="src/class/cdc">
             <path>$TUSB_DIR$/src/class/cdc/cdc_device.c</path>
             <path>$TUSB_DIR$/src/class/cdc/cdc_host.c</path>

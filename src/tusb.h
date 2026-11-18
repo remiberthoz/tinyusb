@@ -55,6 +55,10 @@
     #include "class/msc/msc_host.h"
   #endif
 
+  #if CFG_TUH_CCID
+    #include "class/ccid/ccid_host.h"
+  #endif
+
   #if CFG_TUH_CDC
     #include "class/cdc/cdc_host.h"
   #endif

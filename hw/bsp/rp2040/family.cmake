@@ -119,6 +119,7 @@ target_sources(tinyusb_host_base INTERFACE
 		${TOP}/src/portable/raspberrypi/rp2040/rp2040_usb.c
 		${TOP}/src/host/usbh.c
 		${TOP}/src/host/hub.c
+		${TOP}/src/class/ccid/ccid_host.c
 		${TOP}/src/class/cdc/cdc_host.c
 		${TOP}/src/class/hid/hid_host.c
 		${TOP}/src/class/midi/midi_host.c

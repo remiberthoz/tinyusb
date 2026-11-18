@@ -253,6 +253,18 @@ CFG_TUH_MEM_SECTION static usbh_epbuf_t _usbh_epbuf;
 #endif
 
 static usbh_class_driver_t const usbh_class_drivers[] = {
+  #if CFG_TUH_CCID
+  {
+      .name       = DRIVER_NAME("CCID"),
+      .init       = ccidh_init,
+      .deinit     = ccidh_deinit,
+      .open       = ccidh_open,
+      .set_config = ccidh_set_config,
+      .xfer_cb    = ccidh_xfer_cb,
+      .close      = ccidh_close
+  },
+  #endif
+
   #if CFG_TUH_CDC
   {
       .name       = DRIVER_NAME("CDC"),

@@ -748,6 +748,10 @@
   #define CFG_TUH_HUB    0
 #endif
 
+#ifndef CFG_TUH_CCID
+  #define CFG_TUH_CCID   0
+#endif
+
 #ifndef CFG_TUH_CDC
   #define CFG_TUH_CDC    0
 #endif
